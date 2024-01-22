@@ -2,6 +2,7 @@
 
 
 #include "PlayerScript.h"
+#include "Camera/CameraComponent.h"
 
 // Sets default values
 APlayerScript::APlayerScript()
@@ -32,3 +33,20 @@ void APlayerScript::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 }
 
+void APlayerScript::SpawnActor(TSubclassOf<AActor> actorToSpawn)
+{
+	FActorSpawnParameters spawnParams;
+	spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+	GetWorld()->SpawnActor<AActor>(actorToSpawn, GetActorTransform(), spawnParams);
+}
+
+bool APlayerScript::IsOnScreen(FVector2D screenSize, FVector2D objectProjection)
+{
+	if (objectProjection.X >= 0 && objectProjection.X <= screenSize.X && objectProjection.Y >= 0 && objectProjection.Y <= screenSize.Y) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}

@@ -15,6 +15,12 @@ public:
 	// Sets default values for this character's properties
 	APlayerScript();
 
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		void SpawnActor(class TSubclassOf<AActor> actorToSpawn);
+
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		bool IsOnScreen(FVector2D screenSize, FVector2D objectProjection);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
