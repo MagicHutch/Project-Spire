@@ -51,10 +51,16 @@ float AGaolSpearGuardV2::AngleBetweenVectors(FVector v1, FVector v2, FVector rv)
 
 GaolSpearGuardActions AGaolSpearGuardV2::SelectAction(float currentStamina, float currentHP, float maxHP, float playerHP, float playerMaxHP)
 {
-	//determine situation and advantage
+	//determine situation and advantage, to decide action
 	float advantage = (currentHP / maxHP) - (playerHP / playerMaxHP);
+	int test = 1;
+	
+	UE_LOG(LogTemp, Warning, TEXT("Advantage is %f %f %f %f"), currentHP, maxHP, playerHP, playerMaxHP);
 
-	if (advantage < 0.5f) {
+	if (advantage < -0.2f) {
+		return STRAFE;
+	}
+	else if (advantage < 0.2f) {
 		return THRUST;
 	}
 	else {

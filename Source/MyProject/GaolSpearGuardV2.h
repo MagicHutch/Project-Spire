@@ -11,7 +11,9 @@ UENUM(BlueprintType)
 enum GaolSpearGuardActions
 {
 	THRUST,
-	SWING
+	SWING,
+	STRAFE,
+	THROW
 };
 
 UCLASS()
