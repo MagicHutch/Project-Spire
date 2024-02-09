@@ -30,10 +30,13 @@ public:
 		float AngleBetweenVectors(FVector v1, FVector v2, FVector rv);
 	
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
-		GaolSpearGuardActions SelectAction(float currentStamina, float currentHP, float maxHP, float playerHP, float playerMaxHP);
+		GaolSpearGuardActions SelectAction(float currentStamina, float currentHP, float maxHP, float playerHP, float playerMaxHP, float distanceBetween);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool canAct = true;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool canUseSpear = true;
 
 protected:
 	// Called when the game starts or when spawned

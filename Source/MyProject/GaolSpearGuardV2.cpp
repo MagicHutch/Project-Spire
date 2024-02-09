@@ -49,7 +49,7 @@ float AGaolSpearGuardV2::AngleBetweenVectors(FVector v1, FVector v2, FVector rv)
 	return radianAngle * (180/3.14f);
 }
 
-GaolSpearGuardActions AGaolSpearGuardV2::SelectAction(float currentStamina, float currentHP, float maxHP, float playerHP, float playerMaxHP)
+GaolSpearGuardActions AGaolSpearGuardV2::SelectAction(float currentStamina, float currentHP, float maxHP, float playerHP, float playerMaxHP, float distanceBetween)
 {
 	//determine situation and advantage, to decide action
 	float advantage = (currentHP / maxHP) - (playerHP / playerMaxHP);
@@ -57,14 +57,23 @@ GaolSpearGuardActions AGaolSpearGuardV2::SelectAction(float currentStamina, floa
 	
 	UE_LOG(LogTemp, Warning, TEXT("Advantage is %f %f %f %f"), currentHP, maxHP, playerHP, playerMaxHP);
 
-	if (advantage < -0.2f) {
+	if (advantage < -0.6f && canUseSpear && currentStamina >= 5) {
+		return SWING;
+	}
+	else if (advantage < -0.2f) {
 		return STRAFE;
 	}
-	else if (advantage < 0.2f) {
+	else if (advantage < 0.2f && canUseSpear && currentStamina >= 4) {
 		return THRUST;
 	}
-	else {
+	else if (advantage < 0.8f && canUseSpear && currentStamina >= 4) {
 		return SWING;
+	}
+	else if (advantage <= 1 && canUseSpear && currentStamina >= 6) {
+		return THROW;
+	}
+	else {
+		return STRAFE;
 	}
 }
 
