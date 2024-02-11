@@ -57,16 +57,19 @@ GaolSpearGuardActions AGaolSpearGuardV2::SelectAction(float currentStamina, floa
 	
 	UE_LOG(LogTemp, Warning, TEXT("Advantage is %f %f %f %f"), currentHP, maxHP, playerHP, playerMaxHP);
 
-	if (advantage < -0.6f && canUseSpear && currentStamina >= 5) {
+	if (advantage < -0.6f && currentStamina >= 6 && distanceBetween < 150) {
+		return SHIELDBASH;
+	}
+	else if (advantage < -0.4f && canUseSpear && currentStamina >= 5 && distanceBetween < 200) {
 		return SWING;
 	}
 	else if (advantage < -0.2f) {
 		return STRAFE;
 	}
-	else if (advantage < 0.2f && canUseSpear && currentStamina >= 4) {
+	else if (advantage < 0.2f && canUseSpear && currentStamina >= 4 && distanceBetween < 200) {
 		return THRUST;
 	}
-	else if (advantage < 0.8f && canUseSpear && currentStamina >= 4) {
+	else if (advantage < 0.8f && canUseSpear && currentStamina >= 4 && distanceBetween < 200) {
 		return SWING;
 	}
 	else if (advantage <= 1 && canUseSpear && currentStamina >= 6) {

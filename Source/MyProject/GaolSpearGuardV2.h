@@ -13,7 +13,8 @@ enum GaolSpearGuardActions
 	THRUST,
 	SWING,
 	STRAFE,
-	THROW
+	THROW,
+	SHIELDBASH
 };
 
 UCLASS()
