@@ -33,3 +33,19 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
+float AEnemyCharacter::AngleBetweenVectors(FVector v1, FVector v2, FVector rv)
+{	
+	//get the angle between forward and the test vector
+	float dotProduct = v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z;
+	float magnitude1 = sqrt(v1.X * v1.X + v1.Y * v1.Y + v1.Z * v1.Z);
+	float magnitude2 = sqrt(v2.X * v2.X + v2.Y * v2.Y + v2.Z * v2.Z);
+
+	//get the angle between the right and the test vector
+	float magnitudeRight = sqrt(rv.X * rv.X + rv.Y * rv.Y + rv.Z * rv.Z);
+
+	float result = dotProduct / (magnitude1 * magnitude2);
+	float radianAngle = acos(result);
+
+	return radianAngle * (180/3.14f);
+}
+

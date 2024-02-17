@@ -21,6 +21,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 		void NextState(UEnemyAction* inputState);
 
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		float AngleBetweenVectors(FVector v1, FVector v2, FVector rv);
+
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 		APlayerScript* player;
 	
@@ -35,6 +38,12 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TMap<int, UEnemyAction*> stateList;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FVector lockOnOffset;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float advantage;
 
 protected:
 	// Called when the game starts or when spawned
