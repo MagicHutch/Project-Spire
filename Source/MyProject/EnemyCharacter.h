@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "PlayerScript.h"
+#include "PlayerControllerV2.h"
 #include "CharacterStats.h"
 #include "EnemyAction.h"
 #include "EnemyCharacter.generated.h"
@@ -25,7 +25,7 @@ public:
 		float AngleBetweenVectors(FVector v1, FVector v2, FVector rv);
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-		APlayerScript* player;
+		APlayerControllerV2* player;
 	
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 		UCharacterStats* stats;
