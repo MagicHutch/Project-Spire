@@ -19,8 +19,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		bool IsOnScreen(FVector2D screenSize, FVector2D objectProjection);
 
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		float AngleBetweenVectors(FVector v1, FVector v2, FVector rv);
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UCharacterStats* stats;
+	
+	//UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		//TArray<
 
 protected:
 	// Called when the game starts or when spawned
