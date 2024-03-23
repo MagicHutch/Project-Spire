@@ -29,7 +29,7 @@ public:
 		float maximumStamina = 100;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		float staminaPerSecond = 40;
+		float staminaPerSecond = 50;
 
 protected:
 	// Called when the game starts
