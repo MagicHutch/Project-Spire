@@ -22,6 +22,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		float AngleBetweenVectors(FVector v1, FVector v2, FVector rv);
 
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		void SnapToMoveDirection(FVector2D inputDirection, bool isLockedOn);
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UCharacterStats* stats;
 	

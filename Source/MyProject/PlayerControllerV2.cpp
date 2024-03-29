@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+#include "Kismet/KismetMathLibrary.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "PlayerControllerV2.h"
 
 // Sets default values
@@ -60,10 +62,39 @@ float APlayerControllerV2::AngleBetweenVectors(FVector v1, FVector v2, FVector r
 	float radianAngle = acos(result);
 	float rightRadianAngle = acos(signResult);
 	
-	if (rightRadianAngle * (180/3.1415f) > 90) {
+	if (rightRadianAngle * (180/3.1415f) < 90) {
 		return radianAngle * (180/3.1415f);
 	}
 	else {
 		return radianAngle * (180/3.1415f) * -1;
 	}
+}
+
+void APlayerControllerV2::SnapToMoveDirection(FVector2D inputDirection, bool isLockedOn)
+{
+	//construct 3d move direction
+	FVector moveDirection = FVector(inputDirection.X, inputDirection.Y, 0);
+
+	//get player vectors
+	FVector forwardVector = FVector(0,1,0);
+	FVector rightVector = FVector(1,0,0);
+	
+	//snap player rotation
+	float degreesToRotate = AngleBetweenVectors(forwardVector, moveDirection, rightVector);
+	float yawRotation = degreesToRotate + GetActorRotation().Yaw;
+
+	//UE_LOG(LogTemp, Warning, TEXT("Rotating: %f"), GetActorRotation().Yaw);
+	//UE_LOG(LogTemp, Warning, TEXT("Rotating: %f"), degreesToRotate);
+
+	GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("Rotation: %f"), GetActorRotation().Yaw));
+	GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("Amount To Rotate: %f"), degreesToRotate));
+
+	if (isLockedOn) {
+		SetActorRotation(FRotator(0, yawRotation, 0));
+	}
+	else {
+		//SetActorRotation(FRotator(0, yawRotation + GetActorRotation().Yaw, 0));
+	}
+
+	return;
 }
