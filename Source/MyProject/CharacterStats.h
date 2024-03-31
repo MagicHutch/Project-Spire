@@ -16,6 +16,11 @@ public:
 	// Sets default values for this component's properties
 	UCharacterStats();
 
+	//UPDATE FUNCTIONS
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		bool UseStamina(float staminaAmount);
+
+	//STATS
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float currentHealth = 100;
 	

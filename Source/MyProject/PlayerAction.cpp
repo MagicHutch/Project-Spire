@@ -19,6 +19,9 @@ void UPlayerAction::BeginPlay()
 {
 	Super::BeginPlay();
 
+	player = Cast<APlayerControllerV2>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	
+
 	// ...
 	
 }

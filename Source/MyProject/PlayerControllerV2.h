@@ -28,6 +28,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UCharacterStats* stats;
 	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool playerCanAct;
+
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		//TArray<
 

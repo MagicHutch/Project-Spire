@@ -31,3 +31,15 @@ void UCharacterStats::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	// ...
 }
 
+bool UCharacterStats::UseStamina(float staminaAmount)
+{
+	if (staminaAmount <= currentStamina) {
+		currentStamina -= staminaAmount;
+
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
