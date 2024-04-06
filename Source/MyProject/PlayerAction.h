@@ -37,6 +37,9 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool canBufferFromDefault;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool canRegainStamina;
 
 protected:
 	// Called when the game starts
