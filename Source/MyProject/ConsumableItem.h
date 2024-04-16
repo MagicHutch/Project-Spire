@@ -18,5 +18,7 @@ class MYPROJECT_API AConsumableItem : public AUsableItem
 
 		UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 			void UseItem();
+		
+		
 
 };

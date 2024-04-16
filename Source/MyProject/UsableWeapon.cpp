@@ -3,3 +3,18 @@
 
 #include "UsableWeapon.h"
 
+void AUsableWeapon::EnableWeapon()
+{
+    SetActorHiddenInGame(false);
+    SetActorTickEnabled(true);
+
+    return;
+}
+
+void AUsableWeapon::DisableWeapon()
+{
+    SetActorHiddenInGame(true);
+    SetActorTickEnabled(false);
+
+    return;
+}

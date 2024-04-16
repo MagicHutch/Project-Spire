@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/Texture.h"
 #include "UsableItem.h"
 #include "UsableWeapon.generated.h"
 
@@ -21,6 +22,12 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 
 		UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 			void DeactivateAttack();
+
+		UFUNCTION(BlueprintCallable)
+			void EnableWeapon();
+		
+		UFUNCTION(BlueprintCallable)
+			void DisableWeapon();
 
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
 			float baseDamage = 0;

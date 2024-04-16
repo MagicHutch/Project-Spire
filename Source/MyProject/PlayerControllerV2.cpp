@@ -12,7 +12,6 @@ APlayerControllerV2::APlayerControllerV2()
 	PrimaryActorTick.bCanEverTick = true;
 
 	stats = CreateDefaultSubobject<UCharacterStats>(TEXT("Enemy Stats"));
-
 }
 
 // Called when the game starts or when spawned

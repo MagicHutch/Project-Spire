@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "CharacterStats.h"
+#include "PlayerInventory.h"
 #include "GameFramework/Character.h"
 #include "PlayerControllerV2.generated.h"
 

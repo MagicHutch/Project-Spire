@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Styling/SlateBrush.h"
+#include "Engine/Texture.h"
 #include "GameFramework/Actor.h"
 #include "UsableItem.generated.h"
 
@@ -17,7 +17,7 @@ public:
 	AUsableItem();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		UTexture* itemImage;
+		UTexture2D* itemImage;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FText itemName;
@@ -27,6 +27,9 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool isConsumable;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FString itemType;
 
 protected:
 	// Called when the game starts or when spawned
