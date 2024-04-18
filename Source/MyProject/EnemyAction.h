@@ -21,6 +21,18 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float staminaCost = 10;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool isActiveState = false;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool canRegainStamina = false;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool isAttackAction = false;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float optimalAdvantage = 0;
 
 protected:
 	// Called when the game starts

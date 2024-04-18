@@ -18,12 +18,17 @@ public:
 	// Sets default values for this character's properties
 	AEnemyCharacter();
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-		void NextState(UEnemyAction* inputState);
+	//functions
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		bool NextState(UEnemyAction* inputState);
 
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
-		float AngleBetweenVectors(FVector v1, FVector v2, FVector rv);
+		float AngleBetweenVectors(FVector v1, FVector v2);
 
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		UEnemyAction* PickNextAction(float currentAdvantage, TArray<UEnemyAction*> actionList);
+
+	//references
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 		APlayerControllerV2* player;
 	
@@ -36,14 +41,25 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UEnemyAction* currentState;
 	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		TMap<int, UEnemyAction*> stateList;
-	
+	//variables
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FVector lockOnOffset;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float advantage;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float wanderSpeed = 150;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float chaseSpeed = 300;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float fieldOfViewAngle = 65;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FVector anchorPosition;
+
 
 protected:
 	// Called when the game starts or when spawned
