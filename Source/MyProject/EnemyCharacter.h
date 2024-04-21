@@ -28,6 +28,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		UEnemyAction* PickNextAction(float currentAdvantage, TArray<UEnemyAction*> actionList);
 
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		float AngleToPlayer();
+
 	//references
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 		APlayerControllerV2* player;
@@ -59,6 +62,9 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FVector anchorPosition;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool isAggro = false;
 
 
 protected:

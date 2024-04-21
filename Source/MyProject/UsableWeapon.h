@@ -31,5 +31,7 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
 			float baseDamage = 0;
-	
+
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			bool isCharged = false;
 };

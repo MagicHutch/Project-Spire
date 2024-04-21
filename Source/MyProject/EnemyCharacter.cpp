@@ -3,6 +3,8 @@
 
 #include "EnemyCharacter.h"
 #include "CharacterStats.h"
+#include "Math/Vector.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -46,6 +48,30 @@ float AEnemyCharacter::AngleBetweenVectors(FVector v1, FVector v2)
 	return radianAngle * (180/3.14f);
 }
 
+float AEnemyCharacter::AngleToPlayer()
+{
+	if (player != nullptr) {
+		FVector vectorToPlayer = player->GetActorLocation() - GetActorLocation();
+		FVector forwardVector = GetActorForwardVector();
+		FVector rightVector = GetActorRightVector();
+
+		float baseDotProduct = FVector::DotProduct(forwardVector, vectorToPlayer);
+		float rightDotProduct = FVector::DotProduct(rightVector, vectorToPlayer);
+
+		float angle = acos(baseDotProduct / (vectorToPlayer.Length() * forwardVector.Length())) * (180/PI);
+
+		if (rightDotProduct * (180/PI) <= 90) {
+			return angle;
+		}
+		else {
+			return angle * -1;
+		}
+	}
+	else {
+		return 0;
+	}
+}
+
 bool AEnemyCharacter::NextState(UEnemyAction* inputState)
 {
 	if (inputState != nullptr) {
@@ -76,28 +102,36 @@ UEnemyAction* AEnemyCharacter::PickNextAction(float currentAdvantage, TArray<UEn
 	if (actionList.Num() > 0) {
 		TArray<UEnemyAction*> attackList;
 
+		//populate attackList with all of the attacking actions
 		for (int i = 0; i < actionList.Num(); i++) {
 			if (actionList[i]->isAttackAction) {
 				attackList.Add(actionList[i]);
 			}
 		}
 
+		//if there are options in the attackList
 		if (attackList.Num() > 0) {
-			float bestScore = 10;
+			float averageDifference = 0;
 			UEnemyAction* bestAction = nullptr;
 
+			//find the mean difference from current advantage of attack options
 			for (int i = 0; i < attackList.Num(); i++) {
-				float testScore = abs(attackList[i]->optimalAdvantage - currentAdvantage);
-
-				UE_LOG(LogTemp, Warning, TEXT("Action: %s, TestScore: %f"), attackList[i], testScore);
-
-				if (testScore < bestScore) {
-					bestScore = testScore;
-					bestAction = attackList[i];
-				}
+				averageDifference += abs(attackList[i]->optimalAdvantage - currentAdvantage);
 			}	
 
-			return bestAction;
+			averageDifference /= attackList.Num();
+
+			TArray<UEnemyAction*> attacksToPick;
+
+			//make a list of all attacks within the average distance
+			for (int i = 0; i < attackList.Num(); i++) {
+				if (abs(attackList[i]->optimalAdvantage - currentAdvantage) <= averageDifference) {
+					attacksToPick.Add(attackList[i]);
+				}
+			}
+
+			//return a random option from that
+			return attacksToPick[FMath::RandRange(0,attacksToPick.Num()-1)];
 		}
 		else {
 			return nullptr;
