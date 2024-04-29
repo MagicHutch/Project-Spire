@@ -33,6 +33,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float optimalAdvantage = 0;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool canRotate = false;
 
 protected:
 	// Called when the game starts
