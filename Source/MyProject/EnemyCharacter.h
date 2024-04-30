@@ -65,6 +65,10 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool isAggro = false;
+	
+	//optional boss variables
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FText bossName;
 
 
 protected:
