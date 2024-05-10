@@ -30,11 +30,11 @@ public:
 		float staminaCost;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		bool moveInput;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		bool mouseInput;
+		float moveScalar = 0;
 	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float mouseScalar = 0;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool canBufferFromDefault;
 	

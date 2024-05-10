@@ -24,6 +24,15 @@ public:
 		float AngleBetweenVectors(FVector v1, FVector v2, FVector rv);
 
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		float RawAngleBetweenVectors(FVector v1, FVector v2);
+
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		AActor* EvaluateLockOnOptions(TArray<AActor*> allEnemies, TArray<TEnumAsByte<EObjectTypeQuery>> objectTypesList);
+	
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		AActor* ProcessSwitchLockOn(TArray<AActor*> allEnemies, TArray<TEnumAsByte<EObjectTypeQuery>> objectTypesList, FVector2D processDirection, FVector2D screenSize, AActor* currentLockOn);
+
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		void SnapToMoveDirection(FVector2D inputDirection, bool isLockedOn);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
