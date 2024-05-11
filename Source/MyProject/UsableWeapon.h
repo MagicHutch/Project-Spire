@@ -30,6 +30,9 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 			void DisableWeapon();
 
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			UAnimMontage* weaponAnim;
+
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
 			FVector hitboxOffset;
 
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
