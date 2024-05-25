@@ -23,7 +23,13 @@ public:
 		void CreateInventoryObjects(TArray<UClass*> weaponsToCreate);
 
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
-		void SortIncomingObject(TSubclassOf<AUsableItem> objectToSort);
+		void SortIncomingObject(TSubclassOf<AUsableItem> objectToSort, int quantity);
+
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		void SwitchRightWeapon();
+
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		void SwitchLeftWeapon();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TArray<AUsableWeapon*> weaponList;

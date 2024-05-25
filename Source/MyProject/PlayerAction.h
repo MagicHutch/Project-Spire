@@ -41,6 +41,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool canRegainStamina;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool flipAnimations;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

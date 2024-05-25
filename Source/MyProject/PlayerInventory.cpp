@@ -54,7 +54,7 @@ void UPlayerInventory::CreateInventoryObjects(TArray<UClass*> weaponsToCreate)
 	}
 }
 
-void UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objectToSort)
+void UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objectToSort, int quantity)
 {
 	AUsableItem* defaultActor = Cast<AUsableItem>(objectToSort->GetDefaultObject());
 
@@ -68,24 +68,58 @@ void UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objectToSort)
 			}
 		}
 
-		consumableList.Add(objectClass, 1);
+		consumableList.Add(objectClass, quantity);
 		return;
 	}
 
 	else if (defaultActor->itemType == "WEAPON") {
-		//create the weapon from the given class
-		FActorSpawnParameters spawnParams;
-		spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-		FTransform blankTransform;
-		AUsableWeapon* spawnedWeapon = Cast<AUsableWeapon>(GetWorld()->SpawnActor<AActor>(objectToSort, blankTransform, spawnParams));
+		for (int i = 0; i < quantity; i++) {
+			//create the weapon from the given class
+			FActorSpawnParameters spawnParams;
+			spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+			FTransform blankTransform;
+			AUsableWeapon* spawnedWeapon = Cast<AUsableWeapon>(GetWorld()->SpawnActor<AActor>(objectToSort, blankTransform, spawnParams));
 
-		//add it to weapon list
-		weaponList.Add(spawnedWeapon);
+			//add it to weapon list
+			weaponList.Add(spawnedWeapon);
 
-		//turn off rendering and tick on spawned weapon to decrease resource use
-		spawnedWeapon->SetActorHiddenInGame(true);
-		spawnedWeapon->SetActorTickEnabled(false);
+			//turn off rendering and tick on spawned weapon to decrease resource use
+			spawnedWeapon->SetActorHiddenInGame(true);
+			spawnedWeapon->SetActorTickEnabled(false);
+		}
 
 		return;
+	}
+}
+
+void UPlayerInventory::SwitchLeftWeapon()
+{
+	if (leftWeaponsEquipped[leftWeaponSlot] != nullptr) {
+		leftWeaponsEquipped[leftWeaponSlot]->DisableWeapon();
+	}
+
+	leftWeaponSlot++;
+	if (leftWeaponSlot > 2) {
+		leftWeaponSlot = 0;
+	}
+
+	if (leftWeaponsEquipped[leftWeaponSlot] != nullptr) {
+		leftWeaponsEquipped[leftWeaponSlot]->EnableWeapon();
+	}
+}
+
+void UPlayerInventory::SwitchRightWeapon()
+{
+	if (rightWeaponsEquipped[rightWeaponSlot] != nullptr) {
+		rightWeaponsEquipped[rightWeaponSlot]->DisableWeapon();
+	}
+
+	rightWeaponSlot++;
+	if (rightWeaponSlot > 2) {
+		rightWeaponSlot = 0;
+	}
+
+	if (rightWeaponsEquipped[rightWeaponSlot] != nullptr) {
+		rightWeaponsEquipped[rightWeaponSlot]->EnableWeapon();
 	}
 }
