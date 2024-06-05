@@ -21,6 +21,9 @@ class MYPROJECT_API UGlobalTempData : public UGameInstance
 public:
 
 	UFUNCTION(BlueprintCallable)
+		void SetDefaultValues();
+	
+	UFUNCTION(BlueprintCallable)
 		void PlayerDeathDataClear();
 	
 	UFUNCTION(BlueprintCallable)
@@ -48,5 +51,16 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TArray<AConsumableItem*> playerConsumableList;
+
+	//////////////////////////////////////////////////////////////////////
+
+	//SETTINGS
+
+	//////////////////////////////////////////////////////////////////////
+	UPROPERTY(BlueprintReadOnly)
+		bool isFirstLoad = true;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FVector2D cameraSpeedModifier;
 
 };

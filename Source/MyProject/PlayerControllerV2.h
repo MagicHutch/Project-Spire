@@ -30,7 +30,7 @@ public:
 		AActor* EvaluateLockOnOptions(TArray<AActor*> allEnemies, TArray<TEnumAsByte<EObjectTypeQuery>> objectTypesList);
 	
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
-		AActor* ProcessSwitchLockOn(TArray<AActor*> allEnemies, TArray<TEnumAsByte<EObjectTypeQuery>> objectTypesList, FVector2D processDirection, FVector2D screenSize, AActor* currentLockOn);
+		AActor* ProcessSwitchLockOn(FVector2D referencePosition, TArray<AActor*> allEnemies, TArray<TEnumAsByte<EObjectTypeQuery>> objectTypesList, FVector2D processDirection, FVector2D screenSize, AActor* currentLockOn);
 
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		void SnapToMoveDirection(FVector2D inputDirection, bool isLockedOn);

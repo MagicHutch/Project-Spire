@@ -3,6 +3,21 @@
 
 #include "GlobalTempData.h"
 
+//used to make "starting points" for various settings, only run on initial load up of the game
+void UGlobalTempData::SetDefaultValues()
+{
+    if (isFirstLoad) {
+        //set values
+        cameraSpeedModifier.X = 1; cameraSpeedModifier.Y = 1;
+
+        //set bool to note that first load has occured
+        isFirstLoad = false;
+    }
+    else {
+
+    }
+}
+
 void UGlobalTempData::PlayerDeathDataClear()
 {
     player = nullptr;

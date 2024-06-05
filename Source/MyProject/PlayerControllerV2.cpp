@@ -51,8 +51,14 @@ bool APlayerControllerV2::IsOnScreen(FVector2D screenSize, FVector2D objectProje
 
 void APlayerControllerV2::SnapToMoveDirection(FVector2D inputDirection, bool isLockedOn)
 {
+	UCameraComponent* playerCamera = GetComponentByClass<UCameraComponent>();
+	
 	//construct 3d move direction
 	FVector moveDirection = FVector(inputDirection.X, inputDirection.Y, 0);
+	FVector cameraForwardVector = playerCamera->GetForwardVector();
+	FVector cameraRightVector = playerCamera->GetRightVector();
+	cameraForwardVector.Z = 0;
+	cameraRightVector.Z = 0;
 
 	//get player vectors
 	FVector forwardVector = FVector(0,1,0);
@@ -62,17 +68,20 @@ void APlayerControllerV2::SnapToMoveDirection(FVector2D inputDirection, bool isL
 	float degreesToRotate = AngleBetweenVectors(forwardVector, moveDirection, rightVector);
 	float yawRotation = degreesToRotate + GetActorRotation().Yaw;
 
+	float degreesToSnap = AngleBetweenVectors(cameraForwardVector, moveDirection, cameraRightVector);
+	float yawSnapRotation = GetActorRotation().Yaw + degreesToSnap;
+
 	//UE_LOG(LogTemp, Warning, TEXT("Rotating: %f"), GetActorRotation().Yaw);
 	//UE_LOG(LogTemp, Warning, TEXT("Rotating: %f"), degreesToRotate);
 
 	GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("Rotation: %f"), GetActorRotation().Yaw));
-	GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("Amount To Rotate: %f"), degreesToRotate));
+	GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("Amount To Rotate: %f"), degreesToSnap));
 
 	if (isLockedOn) {
 		SetActorRotation(FRotator(0, yawRotation, 0));
 	}
 	else {
-		//SetActorRotation(FRotator(0, yawRotation + GetActorRotation().Yaw, 0));
+		SetActorRotation(FRotator(0, yawSnapRotation, 0));
 	}
 
 	return;
@@ -178,10 +187,11 @@ AActor* APlayerControllerV2::EvaluateLockOnOptions(TArray<AActor*> allEnemies, T
 	}
 }
 
-AActor* APlayerControllerV2::ProcessSwitchLockOn(TArray<AActor*> allEnemies, TArray<TEnumAsByte<EObjectTypeQuery>> objectTypesList, FVector2D processDirection, FVector2D screenSize, AActor* currentLockOn)
+AActor* APlayerControllerV2::ProcessSwitchLockOn(FVector2D referencePosition, TArray<AActor*> allEnemies, TArray<TEnumAsByte<EObjectTypeQuery>> objectTypesList, FVector2D processDirection, FVector2D screenSize, AActor* currentLockOn)
 {
-	processDirection.Normalize();
-	if (allEnemies.Num() > 0 && processDirection.Length() > 0.25f) {
+	if (allEnemies.Num() > 0 && processDirection.Length() > 0.10f) {
+		processDirection.Normalize();
+
 		GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("%i Enemies In Scene"), allEnemies.Num()));
 
 		//store screen size
@@ -227,7 +237,7 @@ AActor* APlayerControllerV2::ProcessSwitchLockOn(TArray<AActor*> allEnemies, TAr
 				playerController->ProjectWorldLocationToScreen(indexLocation, indexScreenLocation, false);
 
 				//get angle
-				FVector2D enemyDirection = indexScreenLocation - screenCenter;
+				FVector2D enemyDirection = indexScreenLocation - referencePosition;
 				float angle = acos(FVector2D::DotProduct(enemyDirection, processDirection) / (enemyDirection.Length() * processDirection.Length()));
 
 				if (angle < 90) {

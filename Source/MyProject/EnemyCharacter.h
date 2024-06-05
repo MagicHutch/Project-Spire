@@ -68,6 +68,9 @@ public:
 	
 	//optional boss variables
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool isBoss;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FText bossName;
 
 
