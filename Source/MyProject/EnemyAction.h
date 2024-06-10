@@ -19,6 +19,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 		void UseAction();
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+		void AttackBeginEvent();
+	
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+		void AttackEndEvent();
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float staminaCost = 10;
 	
@@ -28,14 +34,29 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool canRegainStamina = false;
 	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Attack Variables")
 		bool isAttackAction = false;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Attack Variables")
+		int attackSection = 0;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Attack Variables")
+		bool ownerIsAttacking = false;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Attack Variables")
 		float optimalAdvantage = 0;
 	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Attack Variables")
+		int bossPhase = 0;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Attack Variables")
+		TArray<AActor*> ignoreActorsList;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool canRotate = false;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float maxRotationSpeed = 0;
 
 protected:
 	// Called when the game starts

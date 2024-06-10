@@ -78,6 +78,7 @@ bool AEnemyCharacter::NextState(UEnemyAction* inputState)
 		if (inputState->staminaCost <= stats->currentStamina) {
 			if (currentState != nullptr) {
 				currentState->isActiveState = false;
+				currentState->attackSection = 0;
 			}
 			
 			currentState = inputState;
@@ -104,7 +105,7 @@ UEnemyAction* AEnemyCharacter::PickNextAction(float currentAdvantage, TArray<UEn
 
 		//populate attackList with all of the attacking actions
 		for (int i = 0; i < actionList.Num(); i++) {
-			if (actionList[i]->isAttackAction) {
+			if (actionList[i]->isAttackAction && actionList[i]->bossPhase == currentPhase) {
 				attackList.Add(actionList[i]);
 			}
 		}
