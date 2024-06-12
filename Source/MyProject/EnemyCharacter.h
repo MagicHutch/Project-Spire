@@ -20,13 +20,16 @@ public:
 
 	//functions
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
-		bool NextState(UEnemyAction* inputState);
+		bool NextState(UEnemyAction* inputState, bool overrideQueue);
 
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		float AngleBetweenVectors(FVector v1, FVector v2);
 
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		UEnemyAction* PickNextAction(float currentAdvantage, TArray<UEnemyAction*> actionList);
+
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		TArray<UEnemyAction*> CreateActionSequence(TArray<UEnemyAction*> actionList);
 
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		float AngleToPlayer();
@@ -44,6 +47,12 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UEnemyAction* currentState;
 	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TArray<UEnemyAction*> actionQueue;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TMap<int, bool> attackSlotChecklist;
+
 	//variables
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FVector lockOnOffset;

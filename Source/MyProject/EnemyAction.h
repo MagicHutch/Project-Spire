@@ -41,6 +41,9 @@ public:
 		int attackSection = 0;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Attack Variables")
+		int attackTypeForOwner = 0;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Attack Variables")
 		bool ownerIsAttacking = false;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Attack Variables")
