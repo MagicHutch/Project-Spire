@@ -41,6 +41,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool playerCanAct;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int orCount;
+
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		//TArray<
 

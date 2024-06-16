@@ -210,17 +210,19 @@ AActor* APlayerControllerV2::ProcessSwitchLockOn(FVector2D referencePosition, TA
 		TArray<AActor*> actorsToIgnoreList;
 
 		for (AActor* index : allEnemies) {
-			//check if target is within FOV
-			FVector indexLocation = index->GetActorLocation();
-			FVector vectorToIndex = indexLocation - selfLocation;
-			float angleToIndex = RawAngleBetweenVectors(selfForwardVector, vectorToIndex);
+			if (index != nullptr) {
+				//check if target is within FOV
+				FVector indexLocation = index->GetActorLocation();
+				FVector vectorToIndex = indexLocation - selfLocation;
+				float angleToIndex = RawAngleBetweenVectors(selfForwardVector, vectorToIndex);
 
-			//check if player has line of sight to potential target
-			FHitResult hitResult;
-			bool viewIsBlocked = UKismetSystemLibrary::LineTraceSingleForObjects(this, selfLocation, indexLocation, objectTypesList, true, actorsToIgnoreList, EDrawDebugTrace::None, hitResult, true, FLinearColor::Red, FLinearColor::Green, 0);
+				//check if player has line of sight to potential target
+				FHitResult hitResult;
+				bool viewIsBlocked = UKismetSystemLibrary::LineTraceSingleForObjects(this, selfLocation, indexLocation, objectTypesList, true, actorsToIgnoreList, EDrawDebugTrace::None, hitResult, true, FLinearColor::Red, FLinearColor::Green, 0);
 
-			if (angleToIndex < 40 && !viewIsBlocked) {
-				allEnemiesWithinView.Add(index);
+				if (angleToIndex < 40 && !viewIsBlocked) {
+					allEnemiesWithinView.Add(index);
+				}
 			}
 		}
 

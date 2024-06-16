@@ -85,6 +85,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int currentPhase = 0;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int orValue;
 
 protected:
 	// Called when the game starts or when spawned
