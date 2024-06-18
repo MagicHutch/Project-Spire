@@ -166,31 +166,36 @@ TArray<UEnemyAction*> AEnemyCharacter::CreateActionSequence(TArray<UEnemyAction*
 	TArray<UEnemyAction*> sequenceToReturn;
 
 
-	for (int i = 0; i < attackSlotChecklist.Num(); i++) {
-		//create a list of actions in the current attack slot being evaluated
-		TArray<UEnemyAction*> listToFeed;
-		
-		for (int j = 0; j < actionList.Num(); j++) {
-			if (actionList[j]->attackTypeForOwner == i) {
-				listToFeed.Add(actionList[j]);
+	if (actionList.Num() > 0) {
+		for (int i = 0; i < attackSlotChecklist.Num(); i++) {
+			//create a list of actions in the current attack slot being evaluated
+			TArray<UEnemyAction*> listToFeed;
+			
+			for (int j = 0; j < actionList.Num(); j++) {
+				if (actionList[j]->attackTypeForOwner == i) {
+					listToFeed.Add(actionList[j]);
+				}
+			}
+
+			//pick an action to add to the sequence
+			if (listToFeed.Num() > 0) {
+				sequenceToReturn.Add(PickNextAction(advantage, listToFeed));
 			}
 		}
 
-		//pick an action to add to the sequence
-		if (listToFeed.Num() > 0) {
-			sequenceToReturn.Add(PickNextAction(advantage, listToFeed));
+		//return the sequence of actions to execute
+
+		if (sequenceToReturn.Num()) {
+			for (int i = 0; i < sequenceToReturn.Num(); i++) {
+				actionQueue.Add(sequenceToReturn[i]);
+			}
 		}
+
+		NextState(actionQueue[0], false);
 	}
-
-	//return the sequence of actions to execute
-
-	if (sequenceToReturn.Num()) {
-		for (int i = 0; i < sequenceToReturn.Num(); i++) {
-			actionQueue.Add(sequenceToReturn[i]);
-		}
+	else {
+		
 	}
-
-	NextState(actionQueue[0], false);
 
 	return sequenceToReturn;
 }

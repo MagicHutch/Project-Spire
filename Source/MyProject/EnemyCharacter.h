@@ -75,6 +75,15 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool isAggro = false;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FVector tetherPosition;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float horizontalTether;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float verticalTether;
+
 	//optional boss variables
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool isBoss;
