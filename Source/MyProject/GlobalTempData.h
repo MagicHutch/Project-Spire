@@ -51,6 +51,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TArray<AConsumableItem*> playerConsumableList;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TMap<FString, int> levelObjectStateData;
 
 	//////////////////////////////////////////////////////////////////////
 

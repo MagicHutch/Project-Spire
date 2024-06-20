@@ -31,6 +31,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		void SwitchLeftWeapon();
 
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		void SwapWeaponHands();
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TArray<AUsableWeapon*> weaponList;
 	
@@ -48,6 +51,12 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int rightWeaponSlot;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TArray<TSubclassOf<AConsumableItem>> consumablesEquipped;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int consumableSlot;
 
 protected:
 	// Called when the game starts

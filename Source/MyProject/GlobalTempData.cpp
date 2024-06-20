@@ -12,6 +12,18 @@ void UGlobalTempData::SetDefaultValues()
 
         //set bool to note that first load has occured
         isFirstLoad = false;
+
+        //setup for level objects
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //TUTORIAL
+        levelObjectStateData.Add("tutorial_First_Gate", 0);
+        levelObjectStateData.Add("tutorial_Ladder_Gate", 0);
+        levelObjectStateData.Add("tutorial_Ramp_Gate", 0);
+        levelObjectStateData.Add("brutach_Entry_FogGate", 0);
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
     else {
 

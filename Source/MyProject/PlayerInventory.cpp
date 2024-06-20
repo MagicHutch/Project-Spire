@@ -20,6 +20,12 @@ UPlayerInventory::UPlayerInventory()
 
 	leftWeaponSlot = 0;
 	rightWeaponSlot = 0;
+
+	for (int i = 0; i < 5; i++) {
+		consumablesEquipped.Add(nullptr);
+	}
+
+	consumableSlot = 0;
 	// ...
 }
 
@@ -122,4 +128,12 @@ void UPlayerInventory::SwitchRightWeapon()
 	if (rightWeaponsEquipped[rightWeaponSlot] != nullptr) {
 		rightWeaponsEquipped[rightWeaponSlot]->EnableWeapon();
 	}
+}
+
+void UPlayerInventory::SwapWeaponHands()
+{
+	AUsableWeapon* leftPlaceholder = leftWeaponsEquipped[leftWeaponSlot];
+
+	leftWeaponsEquipped[leftWeaponSlot] = rightWeaponsEquipped[rightWeaponSlot];
+	rightWeaponsEquipped[rightWeaponSlot] = leftPlaceholder;
 }

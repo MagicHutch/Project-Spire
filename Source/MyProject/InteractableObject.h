@@ -19,6 +19,12 @@ public:
 		void Interact();
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FString levelObjectID;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int levelObjectState;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FText interactPrompt;
 
 protected:
