@@ -16,6 +16,9 @@ void AInteractableObject::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	if (!showTriggersInGame) {
+		HideTriggersOnStartup();
+	}
 }
 
 // Called every frame

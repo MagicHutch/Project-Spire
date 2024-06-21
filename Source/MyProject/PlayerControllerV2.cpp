@@ -49,40 +49,31 @@ bool APlayerControllerV2::IsOnScreen(FVector2D screenSize, FVector2D objectProje
 	}
 }
 
-void APlayerControllerV2::SnapToMoveDirection(FVector2D inputDirection, bool isLockedOn)
+void APlayerControllerV2::SnapToMoveDirection(FVector2D inputDirection)
 {
 	UCameraComponent* playerCamera = GetComponentByClass<UCameraComponent>();
 	
 	//construct 3d move direction
-	FVector moveDirection = FVector(inputDirection.X, inputDirection.Y, 0);
-	FVector cameraForwardVector = playerCamera->GetForwardVector();
-	FVector cameraRightVector = playerCamera->GetRightVector();
-	cameraForwardVector.Z = 0;
-	cameraRightVector.Z = 0;
+	FVector moveDirection;
 
-	//get player vectors
-	FVector forwardVector = FVector(0,1,0);
-	FVector rightVector = FVector(1,0,0);
-	
-	//snap player rotation
-	float degreesToRotate = AngleBetweenVectors(forwardVector, moveDirection, rightVector);
-	float yawRotation = degreesToRotate + GetActorRotation().Yaw;
-
-	float degreesToSnap = AngleBetweenVectors(cameraForwardVector, moveDirection, cameraRightVector);
-	float yawSnapRotation = GetActorRotation().Yaw + degreesToSnap;
-
-	//UE_LOG(LogTemp, Warning, TEXT("Rotating: %f"), GetActorRotation().Yaw);
-	//UE_LOG(LogTemp, Warning, TEXT("Rotating: %f"), degreesToRotate);
-
-	GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("Rotation: %f"), GetActorRotation().Yaw));
-	GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("Amount To Rotate: %f"), degreesToSnap));
-
-	if (isLockedOn) {
-		SetActorRotation(FRotator(0, yawRotation, 0));
+	if (inputDirection == FVector2D(0,0)) {
+		moveDirection = FVector(1, 0, 0);
 	}
 	else {
-		SetActorRotation(FRotator(0, yawSnapRotation, 0));
+		moveDirection = FVector(inputDirection.Y, inputDirection.X, 0);
 	}
+
+	//map move direction to camera direction
+	float cameraRotation = playerCamera->GetSocketRotation(FName()).Yaw;
+	cameraRotation *= (PI/180);
+	FVector cameraAdjustedMoveDirection((moveDirection.X * cos(cameraRotation) - moveDirection.Y * sin(cameraRotation)),
+										(moveDirection.X * sin(cameraRotation) + moveDirection.Y * cos(cameraRotation)), 0);
+
+	GEngine->AddOnScreenDebugMessage(-1,20.0f,FColor::Red, FString::Printf(TEXT("Camera Rotation: %f"), cameraRotation));
+
+	float angleToRotatePlayer = AngleBetweenVectors(GetActorForwardVector(), cameraAdjustedMoveDirection, GetActorRightVector());
+
+	AddActorWorldRotation(FRotator(0, angleToRotatePlayer, 0));
 
 	return;
 }
@@ -187,9 +178,12 @@ AActor* APlayerControllerV2::EvaluateLockOnOptions(TArray<AActor*> allEnemies, T
 	}
 }
 
-AActor* APlayerControllerV2::ProcessSwitchLockOn(FVector2D referencePosition, TArray<AActor*> allEnemies, TArray<TEnumAsByte<EObjectTypeQuery>> objectTypesList, FVector2D processDirection, FVector2D screenSize, AActor* currentLockOn)
+AActor* APlayerControllerV2::ProcessSwitchLockOn(FVector2D referencePosition, TArray<AActor*> allEnemies, TArray<TEnumAsByte<EObjectTypeQuery>> objectTypesList, FVector2D processDirection, FVector2D screenSize, AActor* currentLockOn, bool isUsingKeyboard)
 {
-	if (allEnemies.Num() > 0 && processDirection.Length() > 0.10f) {
+	//GEngine->AddOnScreenDebugMessage(-1,20.0f,FColor::Red, FString::Printf(TEXT("Process Direction Length: %f"), processDirection.Length()));
+	//GEngine->AddOnScreenDebugMessage(-1,20.0f,FColor::Red, FString::Printf(TEXT("Using Keyboard: %d"), isUsingKeyboard));
+
+	if ((allEnemies.Num() > 0 && processDirection.Length() > 0.10f && !isUsingKeyboard) || (allEnemies.Num() > 0 && processDirection.Length() > 0.8f && isUsingKeyboard)) {
 		processDirection.Normalize();
 
 		GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("%i Enemies In Scene"), allEnemies.Num()));

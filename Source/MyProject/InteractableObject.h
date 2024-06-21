@@ -18,6 +18,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 		void Interact();
 	
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+		void HideTriggersOnStartup();
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool showTriggersInGame = false;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FString levelObjectID;
 	

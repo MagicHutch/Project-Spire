@@ -21,6 +21,10 @@ void UGlobalTempData::SetDefaultValues()
         levelObjectStateData.Add("tutorial_Ladder_Gate", 0);
         levelObjectStateData.Add("tutorial_Ramp_Gate", 0);
         levelObjectStateData.Add("brutach_Entry_FogGate", 0);
+
+        levelObjectStateData.Add("tutorial_FugitiveSword_Pickup", 0);
+        levelObjectStateData.Add("tutorial_Healing_Pickup", 0);
+        levelObjectStateData.Add("tutorial_GuardSpear_Pickup", 0);
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,6 +46,7 @@ void UGlobalTempData::LoadPlayerStateFromTemporaryData(UPlayerInventory* invento
 {
     GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("Weapon Lists; left: %i, right: %i"), inventoryObjectToWrite->leftWeaponsEquipped.Num(), inventoryObjectToWrite->rightWeaponsEquipped.Num()));
 
+    //WEAPON LOADING LOGIC
     for (int i = 0; i < playerWeaponList.Num(); i++) {
         //create the weapon from the given class
         FActorSpawnParameters spawnParams;
@@ -91,6 +96,17 @@ void UGlobalTempData::LoadPlayerStateFromTemporaryData(UPlayerInventory* invento
         }
     }
 
+    //CONSUMABLE LOADING LOGIC
+    //load all consumables
+    for (auto current : playerConsumableList) {
+        inventoryObjectToWrite->consumableList.Add(current);
+    }
+
+    //configure equipped consumables
+    for (int i = 0; i < playerConsumablesEquipped.Num(); i++) {
+        inventoryObjectToWrite->consumablesEquipped[i] = playerConsumablesEquipped[i];
+    }
+
     //DEBUG
     for (int i = 0; i < inventoryObjectToWrite->leftWeaponsEquipped.Num(); i++) {
         if (inventoryObjectToWrite->leftWeaponsEquipped[i]) {
@@ -119,11 +135,18 @@ void UGlobalTempData::WritePlayerStateToTemporaryData(UPlayerInventory* inventor
     //clear necessary data
     playerWeaponList.Empty();
     playerEquippedWeaponList.Empty();
+    playerConsumableList.Empty();
+    playerConsumablesEquipped.Empty();
     
     //copy player weapon inventory to save data
     TArray<AUsableWeapon*> listToCopy = inventoryObjectToCopy->weaponList;
     for (int i = 0; i < listToCopy.Num(); i++) {
         playerWeaponList.Add(listToCopy[i]->GetClass());
+    }
+
+    //copy player consumable inventory to save data
+    for (auto current: inventoryObjectToCopy->consumableList) {
+        playerConsumableList.Add(current);
     }
 
     //copy player equipment to save data
@@ -143,4 +166,13 @@ void UGlobalTempData::WritePlayerStateToTemporaryData(UPlayerInventory* inventor
             playerEquippedWeaponList.Add(nullptr);
         }
     }
+    for (int i = 0; i < inventoryObjectToCopy->consumablesEquipped.Num(); i++) {
+        if (inventoryObjectToCopy->consumablesEquipped[i] != nullptr) {
+            playerConsumablesEquipped.Add(inventoryObjectToCopy->consumablesEquipped[i]);
+        }
+        else {
+            playerConsumablesEquipped.Add(nullptr);
+        }
+    }
+
 }

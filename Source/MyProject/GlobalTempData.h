@@ -50,7 +50,10 @@ public:
 		TArray<TSubclassOf<AUsableWeapon>> playerEquippedWeaponList;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		TArray<AConsumableItem*> playerConsumableList;
+		TMap<TSubclassOf<AConsumableItem>, int> playerConsumableList;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TArray<TSubclassOf<AConsumableItem>> playerConsumablesEquipped;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TMap<FString, int> levelObjectStateData;
@@ -65,5 +68,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FVector2D cameraSpeedModifier;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool playerUsingKeyboard = true;
 
 };

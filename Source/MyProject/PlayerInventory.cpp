@@ -69,7 +69,7 @@ void UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objectToSort,
 
 		for (auto it : consumableList) {
 			if (it.Key == objectClass) {
-				consumableList[objectClass]++;
+				consumableList[objectClass] += quantity;
 				return;
 			}
 		}
