@@ -35,6 +35,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		void SnapToMoveDirection(FVector2D inputDirection);
 
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		void ToggleAnalogNavigation(bool isAnalogNavigationEnabled);
+
+	////properties
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		UCharacterStats* stats;
 	

@@ -7,6 +7,7 @@
 #include "Math/Vector.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Camera/CameraComponent.h"
+#include "Framework/Application/NavigationConfig.h"
 #include "PlayerControllerV2.h"
 
 // Sets default values
@@ -83,6 +84,14 @@ void APlayerControllerV2::SnapToMoveDirection(FVector2D inputDirection)
 //BASIC FUNCTIONS
 
 /////////////////////////////////////////////////////////////////////////////////
+void APlayerControllerV2::ToggleAnalogNavigation(bool isAnalogNavigationEnabled)
+{
+	if (FSlateApplication::IsInitialized()) {
+		TSharedRef<FNavigationConfig> currentNavConfig = FSlateApplication::Get().GetNavigationConfig();
+		currentNavConfig->bAnalogNavigation = isAnalogNavigationEnabled;
+		FSlateApplication::Get().SetNavigationConfig(currentNavConfig);
+	}
+}
 
 float APlayerControllerV2::AngleBetweenVectors(FVector v1, FVector v2, FVector rv)
 {	

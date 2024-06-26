@@ -33,8 +33,9 @@ void UCharacterStats::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 bool UCharacterStats::UseStamina(float staminaAmount)
 {
-	if (staminaAmount <= currentStamina) {
-		currentStamina -= staminaAmount;
+	if (currentStamina > 0) {
+		currentStamina -= staminaAmount;	
+		currentStamina = FMath::Clamp(currentStamina, -1 * maximumStamina, maximumStamina);
 
 		return true;
 	}
