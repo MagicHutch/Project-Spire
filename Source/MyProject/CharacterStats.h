@@ -6,6 +6,13 @@
 #include "Components/ActorComponent.h"
 #include "CharacterStats.generated.h"
 
+UENUM(BlueprintType)
+enum class StatusCondition : uint8
+{
+	DESPAIR = 0,
+	TORMENT = 1,
+	CLANGRENE = 2
+};
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class MYPROJECT_API UCharacterStats : public UActorComponent
@@ -19,6 +26,12 @@ public:
 	//UPDATE FUNCTIONS
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		bool UseStamina(float staminaAmount);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+		void PlayerTemporaryHealthAdjust(float healthDecrease);
+
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		void IncreaseDespairMeter(float amountToIncrease);
 
 	//STATS
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -35,6 +48,22 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float staminaPerSecond = 50;
+
+	//STATUS CONDITIONS
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TMap<StatusCondition, bool> appliedStatusConditions;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float currentDespair = 0;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float maximumDespair = 100;
+	
+	UPROPERTY(BlueprintReadOnly)
+		float despairDecreasePerSecond = 5;
+
+	UPROPERTY(BlueprintReadOnly)
+		float despairHealthPerSecond = 5;
 
 protected:
 	// Called when the game starts

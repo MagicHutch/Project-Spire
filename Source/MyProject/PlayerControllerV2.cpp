@@ -24,6 +24,7 @@ void APlayerControllerV2::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	temporaryWill = stats->maximumHealth;
 }
 
 // Called every frame

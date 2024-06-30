@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "PlayerControllerV2.h"
 #include "CharacterStats.h"
 
 // Sets default values for this component's properties
@@ -19,7 +20,11 @@ void UCharacterStats::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
+
+	//Configure status conditions list
+	appliedStatusConditions.Add(StatusCondition::DESPAIR, false);
+	appliedStatusConditions.Add(StatusCondition::TORMENT, false);
+	appliedStatusConditions.Add(StatusCondition::CLANGRENE, false);
 }
 
 
@@ -27,6 +32,27 @@ void UCharacterStats::BeginPlay()
 void UCharacterStats::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	//DESPAIR LOGIC
+
+	if (currentDespair > 0) {
+		currentDespair -= despairDecreasePerSecond * DeltaTime;
+		
+		if (currentDespair <= 0) {
+			appliedStatusConditions.Add(StatusCondition::DESPAIR, false);
+		}
+
+		currentDespair = FMath::Clamp(currentDespair, 0, maximumDespair);
+	}
+
+	if (appliedStatusConditions.FindRef(StatusCondition::DESPAIR)) {
+		currentHealth -= despairHealthPerSecond * DeltaTime;
+
+		APlayerControllerV2* tryGetPlayer = Cast<APlayerControllerV2>(GetOwner());
+		if (tryGetPlayer != nullptr) {
+			tryGetPlayer->temporaryWill -= despairHealthPerSecond * DeltaTime;
+		}
+	}
 
 	// ...
 }
@@ -44,3 +70,13 @@ bool UCharacterStats::UseStamina(float staminaAmount)
 	}
 }
 
+void UCharacterStats::IncreaseDespairMeter(float amountToIncrease)
+{
+	currentDespair += amountToIncrease;
+
+	if (currentDespair >= maximumDespair) {
+		appliedStatusConditions.Add(StatusCondition::DESPAIR, true);
+	}
+
+	currentDespair = FMath::Clamp(currentDespair, 0, maximumDespair);
+}

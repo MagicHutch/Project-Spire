@@ -48,6 +48,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int orCount;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float temporaryWill;
+
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		//TArray<
 
