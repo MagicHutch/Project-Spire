@@ -60,10 +60,10 @@ public:
 		float maximumDespair = 100;
 	
 	UPROPERTY(BlueprintReadOnly)
-		float despairDecreasePerSecond = 5;
+		float despairDecreasePerSecond = 2.5f;
 
 	UPROPERTY(BlueprintReadOnly)
-		float despairHealthPerSecond = 5;
+		float despairHealthPerSecond = 2.5f;
 
 protected:
 	// Called when the game starts
