@@ -44,6 +44,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool flipAnimations;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool forceUncrouch = true;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
