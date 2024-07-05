@@ -26,6 +26,9 @@ public:
 		FText ItemDescription;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FText fullItemDescription;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool isConsumable;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

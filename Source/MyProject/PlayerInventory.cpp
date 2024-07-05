@@ -85,6 +85,7 @@ void UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objectToSort,
 			spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 			FTransform blankTransform;
 			AUsableWeapon* spawnedWeapon = Cast<AUsableWeapon>(GetWorld()->SpawnActor<AActor>(objectToSort, blankTransform, spawnParams));
+			spawnedWeapon->weaponOwner = GetOwner();
 
 			//add it to weapon list
 			weaponList.Add(spawnedWeapon);

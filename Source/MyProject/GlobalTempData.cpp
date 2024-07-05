@@ -53,6 +53,7 @@ void UGlobalTempData::LoadPlayerStateFromTemporaryData(UPlayerInventory* invento
         spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
         FTransform blankTransform = player->GetTransform();
         AUsableWeapon* spawnedWeapon = Cast<AUsableWeapon>(GetWorld()->SpawnActor<AActor>(playerWeaponList[i], blankTransform, spawnParams));
+        spawnedWeapon->weaponOwner = player;
 
         //add it to weapon list
         inventoryObjectToWrite->weaponList.Add(spawnedWeapon);

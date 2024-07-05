@@ -29,6 +29,9 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 		UFUNCTION(BlueprintCallable)
 			void DisableWeapon();
 
+		UPROPERTY(BlueprintReadWrite, EditAnywhere, Meta = (ExposeOnSpawn = "true"))
+			AActor* weaponOwner;
+
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
 			UAnimMontage* weaponAnim;
 
