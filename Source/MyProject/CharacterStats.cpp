@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "PlayerControllerV2.h"
 #include "CharacterStats.h"
+#include "PlayerControllerV2.h"
+
 
 // Sets default values for this component's properties
 UCharacterStats::UCharacterStats()

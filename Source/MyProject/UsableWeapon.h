@@ -17,6 +17,8 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 
 	public:
 
+		AUsableWeapon();
+
 		UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 			void ActivateAttack();
 

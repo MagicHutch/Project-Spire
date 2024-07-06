@@ -3,3 +3,7 @@
 
 #include "ConsumableItem.h"
 
+AConsumableItem::AConsumableItem()
+{
+    itemType = "CONSUMABLE";
+}

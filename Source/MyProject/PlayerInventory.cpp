@@ -97,6 +97,15 @@ void UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objectToSort,
 
 		return;
 	}
+
+	else if (defaultActor->itemType == "KEY") {
+		TSubclassOf<ALevelKey> keyClass = defaultActor->GetClass();
+
+		if (keyClass != nullptr) {
+			keyList.Add(keyClass);
+		}
+
+	}
 }
 
 void UPlayerInventory::SwitchLeftWeapon()

@@ -3,6 +3,11 @@
 
 #include "UsableWeapon.h"
 
+AUsableWeapon::AUsableWeapon()
+{
+    itemType = "WEAPON";
+}
+
 void AUsableWeapon::EnableWeapon()
 {
     SetActorHiddenInGame(false);

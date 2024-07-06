@@ -7,6 +7,7 @@
 #include "UsableItem.h"
 #include "UsableWeapon.h"
 #include "ConsumableItem.h"
+#include "LevelKey.h"
 #include "PlayerInventory.generated.h"
 
 
@@ -57,6 +58,9 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int consumableSlot;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TArray<TSubclassOf<ALevelKey>> keyList;
 
 protected:
 	// Called when the game starts

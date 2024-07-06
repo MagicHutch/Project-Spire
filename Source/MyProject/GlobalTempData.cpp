@@ -20,7 +20,11 @@ void UGlobalTempData::SetDefaultValues()
         levelObjectStateData.Add("tutorial_First_Gate", 0);
         levelObjectStateData.Add("tutorial_Ladder_Gate", 0);
         levelObjectStateData.Add("tutorial_Ramp_Gate", 0);
+        levelObjectStateData.Add("tutorial_Tower_Gate", 0);
+        levelObjectStateData.Add("tutorial_Armory_KeyDoor", 0);
         levelObjectStateData.Add("brutach_Entry_FogGate", 0);
+
+        levelObjectStateData.Add("tutorial_Brutach_Entity", 0);
 
         levelObjectStateData.Add("tutorial_FugitiveSword_Pickup", 0);
         levelObjectStateData.Add("tutorial_Healing_Pickup", 0);
@@ -108,6 +112,11 @@ void UGlobalTempData::LoadPlayerStateFromTemporaryData(UPlayerInventory* invento
         inventoryObjectToWrite->consumablesEquipped[i] = playerConsumablesEquipped[i];
     }
 
+    //KEY LOADING LOGIC
+    for (int i = 0; i < playerKeyList.Num(); i++) {
+        inventoryObjectToWrite->keyList.Add(playerKeyList[i]);
+    }
+
     //DEBUG
     for (int i = 0; i < inventoryObjectToWrite->leftWeaponsEquipped.Num(); i++) {
         if (inventoryObjectToWrite->leftWeaponsEquipped[i]) {
@@ -174,6 +183,11 @@ void UGlobalTempData::WritePlayerStateToTemporaryData(UPlayerInventory* inventor
         else {
             playerConsumablesEquipped.Add(nullptr);
         }
+    }
+
+    //copy player keys to save data
+    for (int i = 0; i < inventoryObjectToCopy->keyList.Num(); i++) {
+        playerKeyList.Add(inventoryObjectToCopy->keyList[i]);
     }
 
 }

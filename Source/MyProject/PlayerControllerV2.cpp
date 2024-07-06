@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "PlayerControllerV2.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
@@ -8,7 +8,7 @@
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Framework/Application/NavigationConfig.h"
-#include "PlayerControllerV2.h"
+
 
 // Sets default values
 APlayerControllerV2::APlayerControllerV2()
@@ -153,17 +153,19 @@ AActor* APlayerControllerV2::EvaluateLockOnOptions(TArray<AActor*> allEnemies, T
 		TArray<AActor*> actorsToIgnoreList;
 
 		for (AActor* index : allEnemies) {
-			//check if target is within FOV
-			FVector indexLocation = index->GetActorLocation();
-			FVector vectorToIndex = indexLocation - selfLocation;
-			float angleToIndex = RawAngleBetweenVectors(selfForwardVector, vectorToIndex);
+			if (index != nullptr) {
+				//check if target is within FOV
+				FVector indexLocation = index->GetActorLocation();
+				FVector vectorToIndex = indexLocation - selfLocation;
+				float angleToIndex = RawAngleBetweenVectors(selfForwardVector, vectorToIndex);
 
-			//check if player has line of sight to potential target
-			FHitResult hitResult;
-			bool viewIsBlocked = UKismetSystemLibrary::LineTraceSingleForObjects(this, selfLocation, indexLocation, objectTypesList, true, actorsToIgnoreList, EDrawDebugTrace::None, hitResult, true, FLinearColor::Red, FLinearColor::Green, 0);
+				//check if player has line of sight to potential target
+				FHitResult hitResult;
+				bool viewIsBlocked = UKismetSystemLibrary::LineTraceSingleForObjects(this, selfLocation, indexLocation, objectTypesList, true, actorsToIgnoreList, EDrawDebugTrace::None, hitResult, true, FLinearColor::Red, FLinearColor::Green, 0);
 
-			if (angleToIndex < 60 && !viewIsBlocked) {
-				allEnemiesWithinView.Add(index, angleToIndex);
+				if (angleToIndex < 60 && !viewIsBlocked) {
+					allEnemiesWithinView.Add(index, angleToIndex);
+				}
 			}
 		}
 

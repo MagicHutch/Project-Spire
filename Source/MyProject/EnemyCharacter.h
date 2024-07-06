@@ -97,6 +97,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int orValue;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FString enemyLevelID;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

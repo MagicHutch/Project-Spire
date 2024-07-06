@@ -56,7 +56,25 @@ public:
 		TArray<TSubclassOf<AConsumableItem>> playerConsumablesEquipped;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TArray<TSubclassOf<ALevelKey>> playerKeyList;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TArray<FString> playerUsedKeyList;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TMap<FString, int> levelObjectStateData;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FString currentRestSite = "";
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FVector deathOrSpawnLocation;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int playerCurrentOr;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int deathOrAmount;
 
 	//////////////////////////////////////////////////////////////////////
 
