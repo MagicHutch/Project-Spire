@@ -11,17 +11,14 @@ UPlayerInventory::UPlayerInventory()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	leftWeaponsEquipped.Add(nullptr);
-	leftWeaponsEquipped.Add(nullptr);
-	leftWeaponsEquipped.Add(nullptr);
 
-	rightWeaponsEquipped.Add(nullptr);
 	rightWeaponsEquipped.Add(nullptr);
 	rightWeaponsEquipped.Add(nullptr);
 
 	leftWeaponSlot = 0;
 	rightWeaponSlot = 0;
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 3; i++) {
 		consumablesEquipped.Add(nullptr);
 	}
 
@@ -108,20 +105,31 @@ void UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objectToSort,
 	}
 }
 
+void UPlayerInventory::SwitchSelectedItem()
+{
+	consumableSlot++;
+
+	if (consumableSlot > 2) {
+		consumableSlot = 0;
+	}
+}
+
 void UPlayerInventory::SwitchLeftWeapon()
 {
-	if (leftWeaponsEquipped[leftWeaponSlot] != nullptr) {
-		leftWeaponsEquipped[leftWeaponSlot]->DisableWeapon();
-	}
+	
+	
+	// if (leftWeaponsEquipped[leftWeaponSlot] != nullptr) {
+	// 	leftWeaponsEquipped[leftWeaponSlot]->DisableWeapon();
+	// }
 
-	leftWeaponSlot++;
-	if (leftWeaponSlot > 2) {
-		leftWeaponSlot = 0;
-	}
+	// leftWeaponSlot++;
+	// if (leftWeaponSlot > 2) {
+	// 	leftWeaponSlot = 0;
+	// }
 
-	if (leftWeaponsEquipped[leftWeaponSlot] != nullptr) {
-		leftWeaponsEquipped[leftWeaponSlot]->EnableWeapon();
-	}
+	// if (leftWeaponsEquipped[leftWeaponSlot] != nullptr) {
+	// 	leftWeaponsEquipped[leftWeaponSlot]->EnableWeapon();
+	// }
 }
 
 void UPlayerInventory::SwitchRightWeapon()
@@ -131,7 +139,7 @@ void UPlayerInventory::SwitchRightWeapon()
 	}
 
 	rightWeaponSlot++;
-	if (rightWeaponSlot > 2) {
+	if (rightWeaponSlot > 1) {
 		rightWeaponSlot = 0;
 	}
 
