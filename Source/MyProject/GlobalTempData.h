@@ -38,6 +38,9 @@ public:
 
 	/////////////////////////////////////////////////////////////////////
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TMap<FName, FVector> levelDefaultSpawnLocations;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		APlayerControllerV2* player;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -75,6 +78,12 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int deathOrAmount;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FName playerLevelOnLoad;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		bool playerIsResting = false;
 
 	//////////////////////////////////////////////////////////////////////
 

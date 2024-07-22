@@ -6,12 +6,19 @@
 //used to make "starting points" for various settings, only run on initial load up of the game
 void UGlobalTempData::SetDefaultValues()
 {
+    
+    playerLevelOnLoad = "CharacterTesting";
+
     if (isFirstLoad) {
         //set values
         cameraSpeedModifier.X = 1; cameraSpeedModifier.Y = 1;
 
         //set bool to note that first load has occured
         isFirstLoad = false;
+
+        //configure failsafe spawn points
+        levelDefaultSpawnLocations.Add("CharacterTesting", FVector(-410, -2270, 92));
+        levelDefaultSpawnLocations.Add("TestFirstArea", FVector(-5, -1670, 92));
 
         //setup for level objects
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,13 +85,13 @@ void UGlobalTempData::LoadPlayerStateFromTemporaryData(UPlayerInventory* invento
             for (int j = 0; j < inventoryObjectToWrite->weaponList.Num(); j++) {
                 AUsableWeapon* objectToTest = inventoryObjectToWrite->weaponList[j];
                 if (objectToTest->GetClass() == playerEquippedWeaponList[i] && !inventoryObjectToWrite->leftWeaponsEquipped.Contains(objectToTest) && !inventoryObjectToWrite->rightWeaponsEquipped.Contains(objectToTest)) {
-                    if (i <= 2) {
+                    if (i <= 0) {
                         inventoryObjectToWrite->leftWeaponsEquipped[i] = objectToTest;
                         //GEngine->AddOnScreenDebugMessage(-1,10.0f,FColor::Red, FString::Printf(TEXT("WEAPON %i selected for slot %i"), i, j));
                         break;
                     }
                     else {
-                        inventoryObjectToWrite->rightWeaponsEquipped[i - 3] = objectToTest;
+                        inventoryObjectToWrite->rightWeaponsEquipped[i - 1] = objectToTest;
                         //GEngine->AddOnScreenDebugMessage(-1,10.0f,FColor::Red, FString::Printf(TEXT("WEAPON %i selected for slot %i"), i, j));
                         break;
                     }
@@ -92,11 +99,11 @@ void UGlobalTempData::LoadPlayerStateFromTemporaryData(UPlayerInventory* invento
             }
         }
         else {
-            if (i <= 2) {
+            if (i <= 0) {
                 inventoryObjectToWrite->leftWeaponsEquipped[i] = nullptr;
             }
             else {
-                inventoryObjectToWrite->rightWeaponsEquipped[i - 3] = nullptr;
+                inventoryObjectToWrite->rightWeaponsEquipped[i - 1] = nullptr;
             }
         }
     }

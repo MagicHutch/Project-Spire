@@ -27,6 +27,9 @@ public:
 		void SortIncomingObject(TSubclassOf<AUsableItem> objectToSort, int quantity);
 
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		void SwitchSelectedItem();
+
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		void SwitchRightWeapon();
 
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
