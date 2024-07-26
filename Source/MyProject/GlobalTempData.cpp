@@ -7,7 +7,7 @@
 void UGlobalTempData::SetDefaultValues()
 {
     
-    playerLevelOnLoad = "CharacterTesting";
+    playerLevelOnLoad = "TestFirstArea";
 
     if (isFirstLoad) {
         //set values
@@ -18,7 +18,7 @@ void UGlobalTempData::SetDefaultValues()
 
         //configure failsafe spawn points
         levelDefaultSpawnLocations.Add("CharacterTesting", FVector(-410, -2270, 92));
-        levelDefaultSpawnLocations.Add("TestFirstArea", FVector(-5, -1670, 92));
+        levelDefaultSpawnLocations.Add("TestFirstArea", FVector(-5, -3600, 92));
 
         //setup for level objects
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,6 +36,21 @@ void UGlobalTempData::SetDefaultValues()
         levelObjectStateData.Add("tutorial_FugitiveSword_Pickup", 0);
         levelObjectStateData.Add("tutorial_Healing_Pickup", 0);
         levelObjectStateData.Add("tutorial_GuardSpear_Pickup", 0);
+
+        //TEST FIRST AREA
+        levelObjectStateData.Add("testFirstArea_CityEntrance_Gate", 0);
+        levelObjectStateData.Add("testFirstArea_RuinedBuildingEntrance_Gate", 0);
+        levelObjectStateData.Add("testFirstArea_RuinedBuildingSideItem_Gate", 0);
+        levelObjectStateData.Add("testFirstArea_RuinedBuildingShortcutOne_Gate", 0);
+        levelObjectStateData.Add("testFirstArea_RuinedBuildingShortcutTwo_Gate", 0);
+        levelObjectStateData.Add("testFirstArea_RightSideShortcut_Gate", 0);
+        levelObjectStateData.Add("testFirstArea_MiddleShortcut_Gate", 0);
+        levelObjectStateData.Add("testFirstArea_RaftersChallengeExit_Gate", 0);
+        levelObjectStateData.Add("testFirstArea_MountainPass_KeyDoor", 0);
+        levelObjectStateData.Add("testFirstArea_LeftSideValleyBridge_KeyDoor", 0);
+        levelObjectStateData.Add("testFirstArea_RuinedBuildingRoofValley_KeyDoor", 0);
+        levelObjectStateData.Add("testFirstArea_QuestingBeastEntry_FogGate", 0);
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
