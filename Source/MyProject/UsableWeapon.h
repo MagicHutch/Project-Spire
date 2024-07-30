@@ -51,4 +51,21 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
 			bool isCharged = false;
+
+		//NEW ATTACK SYSTEM VARIABLES
+			//0 = swing, 1 = stab
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			float weaponStaminaCost = 0;
+		
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			int weaponDefaultSequence = 0;
+		
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			bool isUsingAlternateSequence = false;
+
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			TArray<UAnimMontage*> rightSwingSequence;
+		
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			TArray<UAnimMontage*> rightStabSequence;
 };
