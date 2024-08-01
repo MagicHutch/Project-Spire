@@ -49,6 +49,15 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float staminaPerSecond = 50;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int vitality = 1;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int aggression = 1;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int constitution = 1;
+
 	//STATUS CONDITIONS
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TMap<StatusCondition, bool> appliedStatusConditions;

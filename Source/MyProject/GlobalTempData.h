@@ -8,6 +8,7 @@
 #include "EnemyCharacter.h"
 #include "UsableWeapon.h"
 #include "ConsumableItem.h"
+#include "PlayerSpecialSkill.h"
 #include "GlobalTempData.generated.h"
 
 /**
@@ -53,6 +54,12 @@ public:
 		TArray<TSubclassOf<AUsableWeapon>> playerEquippedWeaponList;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int rightWeaponLevel;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int leftWeaponLevel;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TMap<TSubclassOf<AConsumableItem>, int> playerConsumableList;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -63,6 +70,12 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TArray<FString> playerUsedKeyList;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TArray<TSubclassOf<APlayerSpecialSkill>> playerSkillList;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TArray<TSubclassOf<APlayerSpecialSkill>> playerSkillsEquipped;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TMap<FString, int> levelObjectStateData;
@@ -79,6 +92,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int deathOrAmount;
 	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int smeltingOrCount;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FName playerLevelOnLoad;
 	

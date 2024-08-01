@@ -52,6 +52,12 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
 			bool isCharged = false;
 
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			int weaponLevel = 0;
+		
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			int weaponDamageUpPerLevel = 0;
+
 		//NEW ATTACK SYSTEM VARIABLES
 			//0 = swing, 1 = stab
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)

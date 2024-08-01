@@ -8,6 +8,7 @@
 #include "UsableWeapon.h"
 #include "ConsumableItem.h"
 #include "LevelKey.h"
+#include "PlayerSpecialSkill.h"
 #include "PlayerInventory.generated.h"
 
 
@@ -38,6 +39,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		void SwapWeaponHands();
 
+	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
+		void SwitchSkill();
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TArray<AUsableWeapon*> weaponList;
 	
@@ -64,6 +68,15 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TArray<TSubclassOf<ALevelKey>> keyList;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TArray<APlayerSpecialSkill*> skillList;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		TArray<APlayerSpecialSkill*> skillsEquipped;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int skillSlot = 0;
 
 protected:
 	// Called when the game starts

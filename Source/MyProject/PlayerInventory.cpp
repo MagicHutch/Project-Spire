@@ -13,7 +13,6 @@ UPlayerInventory::UPlayerInventory()
 	leftWeaponsEquipped.Add(nullptr);
 
 	rightWeaponsEquipped.Add(nullptr);
-	rightWeaponsEquipped.Add(nullptr);
 
 	leftWeaponSlot = 0;
 	rightWeaponSlot = 0;
@@ -23,6 +22,9 @@ UPlayerInventory::UPlayerInventory()
 	}
 
 	consumableSlot = 0;
+
+	skillsEquipped.Add(nullptr);
+	skillsEquipped.Add(nullptr);
 	// ...
 }
 
@@ -103,6 +105,20 @@ void UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objectToSort,
 		}
 
 	}
+
+	else if (defaultActor->itemType == "SKILL") {
+		FActorSpawnParameters spawnParams;
+		spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+		FTransform blankTransform;
+		APlayerSpecialSkill* spawnedSkillObject = Cast<APlayerSpecialSkill>(GetWorld()->SpawnActor<AActor>(objectToSort, blankTransform, spawnParams));
+
+		//add to skill list
+		skillList.Add(spawnedSkillObject);
+
+		//apply default render and tick settings
+		spawnedSkillObject->ToggleObjectTick(spawnedSkillObject->tickEnabledOnSpawn);
+		spawnedSkillObject->ToggleObjectVisibility(spawnedSkillObject->isVisibleOnSpawn);
+	}
 }
 
 void UPlayerInventory::SwitchSelectedItem()
@@ -154,4 +170,13 @@ void UPlayerInventory::SwapWeaponHands()
 
 	leftWeaponsEquipped[leftWeaponSlot] = rightWeaponsEquipped[rightWeaponSlot];
 	rightWeaponsEquipped[rightWeaponSlot] = leftPlaceholder;
+}
+
+void UPlayerInventory::SwitchSkill()
+{
+	skillSlot++;
+
+	if (skillSlot > 1) {
+		skillSlot = 0;
+	}
 }

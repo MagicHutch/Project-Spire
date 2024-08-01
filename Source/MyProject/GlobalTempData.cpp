@@ -7,7 +7,9 @@
 void UGlobalTempData::SetDefaultValues()
 {
     
-    playerLevelOnLoad = "TestFirstArea";
+    playerLevelOnLoad = "CharacterTesting";
+
+    smeltingOrCount = 6;
 
     if (isFirstLoad) {
         //set values
@@ -36,6 +38,7 @@ void UGlobalTempData::SetDefaultValues()
         levelObjectStateData.Add("tutorial_FugitiveSword_Pickup", 0);
         levelObjectStateData.Add("tutorial_Healing_Pickup", 0);
         levelObjectStateData.Add("tutorial_GuardSpear_Pickup", 0);
+        levelObjectStateData.Add("tutorial_DamageBoon_Pickup", 0);
 
         //TEST FIRST AREA
         levelObjectStateData.Add("testFirstArea_CityEntrance_Gate", 0);
@@ -134,6 +137,51 @@ void UGlobalTempData::LoadPlayerStateFromTemporaryData(UPlayerInventory* invento
         inventoryObjectToWrite->consumablesEquipped[i] = playerConsumablesEquipped[i];
     }
 
+    // //SKILLS LOADING LOGIC
+    
+    UE_LOG(LogTemp, Warning, TEXT("ENTERING SKILL LOAD"));
+
+    //spawn skills
+    for (int i = 0; i < playerSkillList.Num(); i++) {
+        if (playerSkillList[i] != nullptr) {
+            FActorSpawnParameters spawnParams;
+            spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+            FTransform blankTransform;
+            APlayerSpecialSkill* spawnedSkillObject = Cast<APlayerSpecialSkill>(GetWorld()->SpawnActor<AActor>(playerSkillList[i], blankTransform, spawnParams));
+
+            //add to skill list
+            inventoryObjectToWrite->skillList.Add(spawnedSkillObject);
+
+            //apply default render and tick settings
+            spawnedSkillObject->ToggleObjectTick(spawnedSkillObject->tickEnabledOnSpawn);
+            spawnedSkillObject->ToggleObjectVisibility(spawnedSkillObject->isVisibleOnSpawn);
+        }
+    }
+
+    playerSkillList.Empty();
+
+    GEngine->AddOnScreenDebugMessage(-1,10.0f,FColor::Red, FString::Printf(TEXT("SKILLS SPAWNED: %i"), inventoryObjectToWrite->skillList.Num()));
+
+    UE_LOG(LogTemp, Warning, TEXT("SKILL OBJECTS SPAWNED"));
+
+    //assign skills
+    for (int i = 0; i < playerSkillsEquipped.Num(); i++) {
+        if (playerSkillsEquipped[i] == nullptr) {
+            inventoryObjectToWrite->skillsEquipped[i] = nullptr;
+        }
+        else {
+            for (int j = 0; j < inventoryObjectToWrite->skillList.Num(); j++) {
+                if (inventoryObjectToWrite->skillList[j] != nullptr) {
+                    if (inventoryObjectToWrite->skillList[j]->GetClass() == playerSkillsEquipped[i]) {
+                        inventoryObjectToWrite->skillsEquipped[i] = inventoryObjectToWrite->skillList[j];
+                    }
+                }
+            }
+        }
+    }
+
+    UE_LOG(LogTemp, Warning, TEXT("SKILL EQUIPMENT CONFIGURED"))
+
     //KEY LOADING LOGIC
     for (int i = 0; i < playerKeyList.Num(); i++) {
         inventoryObjectToWrite->keyList.Add(playerKeyList[i]);
@@ -169,6 +217,8 @@ void UGlobalTempData::WritePlayerStateToTemporaryData(UPlayerInventory* inventor
     playerEquippedWeaponList.Empty();
     playerConsumableList.Empty();
     playerConsumablesEquipped.Empty();
+    playerSkillList.Empty();
+    playerSkillsEquipped.Empty();
     
     //copy player weapon inventory to save data
     TArray<AUsableWeapon*> listToCopy = inventoryObjectToCopy->weaponList;
@@ -179,6 +229,13 @@ void UGlobalTempData::WritePlayerStateToTemporaryData(UPlayerInventory* inventor
     //copy player consumable inventory to save data
     for (auto current: inventoryObjectToCopy->consumableList) {
         playerConsumableList.Add(current);
+    }
+
+    //copt player skill inventory
+    for (auto current: inventoryObjectToCopy->skillList) {
+        if (current != nullptr) {
+            playerSkillList.Add(current->GetClass());
+        }
     }
 
     //copy player equipment to save data
@@ -204,6 +261,15 @@ void UGlobalTempData::WritePlayerStateToTemporaryData(UPlayerInventory* inventor
         }
         else {
             playerConsumablesEquipped.Add(nullptr);
+        }
+    }
+
+    for (int i = 0; i < inventoryObjectToCopy->skillsEquipped.Num(); i++) {
+        if (inventoryObjectToCopy->skillsEquipped[i] != nullptr) {
+            playerSkillsEquipped.Add(inventoryObjectToCopy->skillsEquipped[i]->GetClass());
+        }
+        else {
+            playerSkillsEquipped.Add(nullptr);
         }
     }
 
