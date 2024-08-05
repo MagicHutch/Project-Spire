@@ -31,6 +31,9 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 		UFUNCTION(BlueprintCallable)
 			void DisableWeapon();
 
+		UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+			void AlterLevel();
+
 		UPROPERTY(BlueprintReadWrite, EditAnywhere, Meta = (ExposeOnSpawn = "true"))
 			AActor* weaponOwner;
 
@@ -57,6 +60,9 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 		
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
 			int weaponDamageUpPerLevel = 0;
+		
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			TArray<FString> weaponLevelDescriptions;
 
 		//NEW ATTACK SYSTEM VARIABLES
 			//0 = swing, 1 = stab

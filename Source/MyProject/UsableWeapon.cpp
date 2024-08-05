@@ -6,6 +6,12 @@
 AUsableWeapon::AUsableWeapon()
 {
     itemType = "WEAPON";
+
+    weaponLevelDescriptions.Add("");
+    weaponLevelDescriptions.Add("");
+    weaponLevelDescriptions.Add("");
+    weaponLevelDescriptions.Add("");
+    weaponLevelDescriptions.Add("");
 }
 
 void AUsableWeapon::EnableWeapon()
