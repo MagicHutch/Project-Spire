@@ -2,6 +2,7 @@
 
 
 #include "PlayerInventory.h"
+#include "GlobalTempData.h"
 
 // Sets default values for this component's properties
 UPlayerInventory::UPlayerInventory()
@@ -118,6 +119,11 @@ void UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objectToSort,
 		//apply default render and tick settings
 		spawnedSkillObject->ToggleObjectTick(spawnedSkillObject->tickEnabledOnSpawn);
 		spawnedSkillObject->ToggleObjectVisibility(spawnedSkillObject->isVisibleOnSpawn);
+	}
+
+	else if (defaultActor->itemType == "MATERIAL") {
+		Cast<UGlobalTempData>(GetWorld()->GetGameInstance())->smeltingOrCount++;
+		GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("Current Or Count: %i"), Cast<UGlobalTempData>(GetWorld()->GetGameInstance())->smeltingOrCount));
 	}
 }
 

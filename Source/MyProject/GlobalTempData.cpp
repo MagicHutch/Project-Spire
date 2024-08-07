@@ -7,9 +7,7 @@
 void UGlobalTempData::SetDefaultValues()
 {
     
-    playerLevelOnLoad = "CharacterTesting";
-
-    smeltingOrCount = 6;
+    //playerLevelOnLoad = "CharacterTesting";
 
     if (isFirstLoad) {
         //set values
@@ -53,6 +51,8 @@ void UGlobalTempData::SetDefaultValues()
         levelObjectStateData.Add("testFirstArea_LeftSideValleyBridge_KeyDoor", 0);
         levelObjectStateData.Add("testFirstArea_RuinedBuildingRoofValley_KeyDoor", 0);
         levelObjectStateData.Add("testFirstArea_QuestingBeastEntry_FogGate", 0);
+
+        levelObjectStateData.Add("testFirstArea_SmeltingOr_Pickup", 0);
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
