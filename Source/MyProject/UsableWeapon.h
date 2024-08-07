@@ -80,4 +80,19 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 		
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
 			TArray<UAnimMontage*> rightStabSequence;
+		
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			UAnimMontage* rightHeavySwingAnim;
+		
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			UAnimMontage* rightHeavyStabAnim;
+		
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			UAnimMontage* rightDodgeSwingAnim;
+		
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			UAnimMontage* rightDodgeStabAnim;
+		
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			UAnimMontage* rightFallingAttackRecoveryAnim;
 };
