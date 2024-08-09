@@ -122,7 +122,7 @@ void UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objectToSort,
 	}
 
 	else if (defaultActor->itemType == "MATERIAL") {
-		Cast<UGlobalTempData>(GetWorld()->GetGameInstance())->smeltingOrCount++;
+		Cast<UGlobalTempData>(GetWorld()->GetGameInstance())->smeltingOrCount += quantity;
 		GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("Current Or Count: %i"), Cast<UGlobalTempData>(GetWorld()->GetGameInstance())->smeltingOrCount));
 	}
 }

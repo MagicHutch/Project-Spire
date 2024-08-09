@@ -20,7 +20,7 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 		AUsableWeapon();
 
 		UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-			void ActivateAttack(bool isHeavy, bool isJump, bool isDodge, UAnimMontage* inAnimToCheck);
+			void ActivateAttack(bool isHeavy, bool isJump, bool isDodge, bool isOffhand, UAnimMontage* inAnimToCheck);
 
 		UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 			void DeactivateAttack();
@@ -85,6 +85,9 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 			float weaponStabRawDamage = 0;
 		
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			float weaponOffhandRawDamage = 0;
+
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
 			float weaponJumpAttackMultiplier = 1.5f;
 		
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -92,6 +95,9 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 		
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
 			float weaponDodgeAttackMultiplier = 0.5f;
+		
+		UPROPERTY(BlueprintReadWrite, EditAnywhere)
+			float weaponOffhandAttackMultiplier = 1;
 
 		UPROPERTY(BlueprintReadWrite, EditAnywhere)
 			TArray<UAnimMontage*> rightSwingSequence;
