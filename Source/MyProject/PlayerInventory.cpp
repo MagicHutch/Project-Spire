@@ -53,78 +53,108 @@ void UPlayerInventory::CreateInventoryObjects(TArray<UClass*> weaponsToCreate)
 	FTransform spawnTransform;
 
 	for (int i = 0; i < weaponsToCreate.Num(); i++) {
-		FActorSpawnParameters spawnParams;
-		spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+		if (weaponsToCreate[i] != nullptr) {
+			FActorSpawnParameters spawnParams;
+			spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
-		weaponList.Add(Cast<AUsableWeapon>(GetWorld()->SpawnActor<AActor>(weaponsToCreate[i], spawnTransform, spawnParams)));
+			weaponList.Add(Cast<AUsableWeapon>(GetWorld()->SpawnActor<AActor>(weaponsToCreate[i], spawnTransform, spawnParams)));
+		}
 	}
 }
 
-void UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objectToSort, int quantity)
+AUsableItem* UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objectToSort, int quantity, AActor* ownerOverride)
 {
-	AUsableItem* defaultActor = Cast<AUsableItem>(objectToSort->GetDefaultObject());
+	if (objectToSort != nullptr) {
+		AUsableItem* defaultActor = Cast<AUsableItem>(objectToSort->GetDefaultObject());
 
-	if (defaultActor->itemType == "CONSUMABLE") {
-		TSubclassOf<AConsumableItem> objectClass = defaultActor->GetClass();
+		if (defaultActor->itemType == "CONSUMABLE") {
+			TSubclassOf<AConsumableItem> objectClass = defaultActor->GetClass();
 
-		for (auto it : consumableList) {
-			if (it.Key == objectClass) {
-				consumableList[objectClass] += quantity;
-				return;
+			for (auto it : consumableList) {
+				if (it.Key == objectClass) {
+					consumableList[objectClass] += quantity;
+					return nullptr;
+				}
 			}
+
+			consumableList.Add(objectClass, quantity);
+			return nullptr;
 		}
 
-		consumableList.Add(objectClass, quantity);
-		return;
-	}
+		else if (defaultActor->itemType == "WEAPON") {
+			AUsableItem* weaponToReturn = nullptr;
+			
+			for (int i = 0; i < quantity; i++) {
+				//create the weapon from the given class
+				FActorSpawnParameters spawnParams;
+				spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+				FTransform blankTransform;
+				AUsableWeapon* spawnedWeapon = Cast<AUsableWeapon>(GetWorld()->SpawnActor<AActor>(objectToSort, blankTransform, spawnParams));
 
-	else if (defaultActor->itemType == "WEAPON") {
-		for (int i = 0; i < quantity; i++) {
-			//create the weapon from the given class
+				//owner logic
+				if (ownerOverride != nullptr) {
+					spawnedWeapon->weaponOwner = ownerOverride;
+				}
+				else {
+					spawnedWeapon->weaponOwner = GetOwner();
+				}
+
+				weaponToReturn = spawnedWeapon;
+
+				//add it to weapon list
+				weaponList.Add(spawnedWeapon);
+
+				//turn off rendering and tick on spawned weapon to decrease resource use
+				spawnedWeapon->SetActorHiddenInGame(true);
+				spawnedWeapon->SetActorTickEnabled(false);
+				spawnedWeapon->ClearActorClassIgnore();
+				spawnedWeapon->AddActorClassIgnore(spawnedWeapon->weaponOwner->GetClass());
+			}
+
+			return weaponToReturn;
+		}
+
+		else if (defaultActor->itemType == "KEY") {
+			TSubclassOf<ALevelKey> keyClass = defaultActor->GetClass();
+
+			if (keyClass != nullptr) {
+				keyList.Add(keyClass);
+			}
+
+			return nullptr;
+		}
+
+		else if (defaultActor->itemType == "SKILL") {
 			FActorSpawnParameters spawnParams;
 			spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 			FTransform blankTransform;
-			AUsableWeapon* spawnedWeapon = Cast<AUsableWeapon>(GetWorld()->SpawnActor<AActor>(objectToSort, blankTransform, spawnParams));
-			spawnedWeapon->weaponOwner = GetOwner();
+			APlayerSpecialSkill* spawnedSkillObject = Cast<APlayerSpecialSkill>(GetWorld()->SpawnActor<AActor>(objectToSort, blankTransform, spawnParams));
 
-			//add it to weapon list
-			weaponList.Add(spawnedWeapon);
+			//add to skill list
+			skillList.Add(spawnedSkillObject);
 
-			//turn off rendering and tick on spawned weapon to decrease resource use
-			spawnedWeapon->SetActorHiddenInGame(true);
-			spawnedWeapon->SetActorTickEnabled(false);
+			//apply default render and tick settings
+			spawnedSkillObject->ToggleObjectTick(spawnedSkillObject->tickEnabledOnSpawn);
+			spawnedSkillObject->ToggleObjectVisibility(spawnedSkillObject->isVisibleOnSpawn);
+
+			return spawnedSkillObject;
 		}
 
-		return;
-	}
-
-	else if (defaultActor->itemType == "KEY") {
-		TSubclassOf<ALevelKey> keyClass = defaultActor->GetClass();
-
-		if (keyClass != nullptr) {
-			keyList.Add(keyClass);
+		else if (defaultActor->itemType == "MATERIAL") {
+			Cast<UGlobalTempData>(GetWorld()->GetGameInstance())->smeltingOrCount += quantity;
+			GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("Current Or Count: %i"), Cast<UGlobalTempData>(GetWorld()->GetGameInstance())->smeltingOrCount));
+		
+			return nullptr;
 		}
 
+		else {
+			return nullptr;
+		}
 	}
-
-	else if (defaultActor->itemType == "SKILL") {
-		FActorSpawnParameters spawnParams;
-		spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-		FTransform blankTransform;
-		APlayerSpecialSkill* spawnedSkillObject = Cast<APlayerSpecialSkill>(GetWorld()->SpawnActor<AActor>(objectToSort, blankTransform, spawnParams));
-
-		//add to skill list
-		skillList.Add(spawnedSkillObject);
-
-		//apply default render and tick settings
-		spawnedSkillObject->ToggleObjectTick(spawnedSkillObject->tickEnabledOnSpawn);
-		spawnedSkillObject->ToggleObjectVisibility(spawnedSkillObject->isVisibleOnSpawn);
+	else {
+		return nullptr;
 	}
-
-	else if (defaultActor->itemType == "MATERIAL") {
-		Cast<UGlobalTempData>(GetWorld()->GetGameInstance())->smeltingOrCount += quantity;
-		GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red, FString::Printf(TEXT("Current Or Count: %i"), Cast<UGlobalTempData>(GetWorld()->GetGameInstance())->smeltingOrCount));
-	}
+	
 }
 
 void UPlayerInventory::SwitchSelectedItem()

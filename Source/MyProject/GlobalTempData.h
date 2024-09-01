@@ -84,6 +84,9 @@ public:
 		FString currentRestSite = "";
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FVector debugSpawnPosition;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		FVector deathOrSpawnLocation;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -106,7 +109,7 @@ public:
 	//SETTINGS
 
 	//////////////////////////////////////////////////////////////////////
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		bool isFirstLoad = true;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

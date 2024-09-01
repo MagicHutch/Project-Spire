@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "GlobalTempData.h"
 
 //used to make "starting points" for various settings, only run on initial load up of the game
@@ -10,6 +9,7 @@ void UGlobalTempData::SetDefaultValues()
     //playerLevelOnLoad = "CharacterTesting";
 
     if (isFirstLoad) {
+        
         //set values
         cameraSpeedModifier.X = 1; cameraSpeedModifier.Y = 1;
 

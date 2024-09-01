@@ -32,6 +32,15 @@ class MYPROJECT_API AUsableWeapon : public AUsableItem
 			void DisableWeapon();
 
 		UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+			void ClearActorClassIgnore();
+
+		UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+			TArray<TSubclassOf<AActor>> RemoveActorClassIgnore(TSubclassOf<AActor> classToRemove);
+		
+		UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+			TArray<TSubclassOf<AActor>> AddActorClassIgnore(TSubclassOf<AActor> classToAdd);
+
+		UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 			void AlterLevel();
 
 		UPROPERTY(BlueprintReadWrite, EditAnywhere, Meta = (ExposeOnSpawn = "true"))

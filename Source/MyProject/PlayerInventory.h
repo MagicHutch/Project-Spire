@@ -25,7 +25,7 @@ public:
 		void CreateInventoryObjects(TArray<UClass*> weaponsToCreate);
 
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
-		void SortIncomingObject(TSubclassOf<AUsableItem> objectToSort, int quantity);
+		AUsableItem* SortIncomingObject(TSubclassOf<AUsableItem> objectToSort, int quantity, AActor* ownerOverride);
 
 	UFUNCTION(BlueprintCallable, Category = "Scripted Functions")
 		void SwitchSelectedItem();
