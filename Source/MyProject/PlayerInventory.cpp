@@ -21,11 +21,10 @@ UPlayerInventory::UPlayerInventory()
 	for (int i = 0; i < 3; i++) {
 		consumablesEquipped.Add(nullptr);
 	}
-
 	consumableSlot = 0;
 
-	skillsEquipped.Add(nullptr);
-	skillsEquipped.Add(nullptr);
+	spellsEquipped.Add(nullptr);
+	spellsEquipped.Add(nullptr);
 	// ...
 }
 
@@ -124,20 +123,18 @@ AUsableItem* UPlayerInventory::SortIncomingObject(TSubclassOf<AUsableItem> objec
 			return nullptr;
 		}
 
-		else if (defaultActor->itemType == "SKILL") {
+		else if (defaultActor->itemType == "SPELL") {
 			FActorSpawnParameters spawnParams;
 			spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 			FTransform blankTransform;
-			APlayerSpecialSkill* spawnedSkillObject = Cast<APlayerSpecialSkill>(GetWorld()->SpawnActor<AActor>(objectToSort, blankTransform, spawnParams));
+			APlayerSpell* spawnedSpell = Cast<APlayerSpell>(GetWorld()->SpawnActor<AActor>(objectToSort, blankTransform, spawnParams));
 
-			//add to skill list
-			skillList.Add(spawnedSkillObject);
+			spellList.Add(spawnedSpell);
 
-			//apply default render and tick settings
-			spawnedSkillObject->ToggleObjectTick(spawnedSkillObject->tickEnabledOnSpawn);
-			spawnedSkillObject->ToggleObjectVisibility(spawnedSkillObject->isVisibleOnSpawn);
+			spawnedSpell->SetActorHiddenInGame(true);
+			spawnedSpell->SetActorTickEnabled(false);
 
-			return spawnedSkillObject;
+			return spawnedSpell;
 		}
 
 		else if (defaultActor->itemType == "MATERIAL") {
@@ -208,11 +205,11 @@ void UPlayerInventory::SwapWeaponHands()
 	rightWeaponsEquipped[rightWeaponSlot] = leftPlaceholder;
 }
 
-void UPlayerInventory::SwitchSkill()
+void UPlayerInventory::SwitchSpell()
 {
-	skillSlot++;
+	spellSlot++;
 
-	if (skillSlot > 1) {
-		skillSlot = 0;
+	if (spellSlot > 1) {
+		spellSlot = 0;
 	}
 }

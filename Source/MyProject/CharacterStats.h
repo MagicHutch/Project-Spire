@@ -47,6 +47,12 @@ public:
 		float maximumStamina = 100;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float currentMana = 100;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		float maximumMana = 100;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float staminaPerSecond = 50;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

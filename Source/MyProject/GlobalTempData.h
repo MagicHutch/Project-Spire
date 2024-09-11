@@ -9,6 +9,7 @@
 #include "UsableWeapon.h"
 #include "ConsumableItem.h"
 #include "PlayerSpecialSkill.h"
+#include "PlayerSpell.h"
 #include "GlobalTempData.generated.h"
 
 /**
@@ -72,10 +73,10 @@ public:
 		TArray<FString> playerUsedKeyList;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		TArray<TSubclassOf<APlayerSpecialSkill>> playerSkillList;
+		TArray<TSubclassOf<APlayerSpell>> playerSpellList;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		TArray<TSubclassOf<APlayerSpecialSkill>> playerSkillsEquipped;
+		TArray<TSubclassOf<APlayerSpell>> playerSpellsEquipped;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		TMap<FString, int> levelObjectStateData;
