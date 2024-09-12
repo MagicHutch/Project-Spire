@@ -28,6 +28,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 		void useSpellReleased();
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+		void useSpellAbort();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+		void useSpellImmediate();
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int spellCost = 0;
 	
